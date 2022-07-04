@@ -23,7 +23,7 @@ return (
     <div className="d-flex text-decoration-none  something ">
         {error && <Alert color="danger">{error}</Alert>}
         <div >
-        <Button type='click' className=" " onClick={handleLogout}>
+        <Button type='click' color="info" className=" " onClick={handleLogout}>
             Log Out
         </Button>
         </div>

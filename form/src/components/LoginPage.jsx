@@ -1,5 +1,5 @@
 import React,{ useState}from 'react'
-import { Form , FormGroup, Label, Input, Button, Card, CardBody, Container, Alert,} from 'reactstrap'
+import { Form , FormGroup, Label, Input, Button, Card, CardBody, Container, Alert, Toast,} from 'reactstrap'
 import {Link, useNavigate} from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
@@ -22,7 +22,7 @@ import { useAuth } from '../context/AuthContext'
        
       nav('/add');
     }catch{
-      setErr('Failed to Sign In');
+      setErr('User does not exists');
     }
     setLoading(true)
   }

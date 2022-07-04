@@ -17,7 +17,7 @@ class UserDataService {
   };
 
   updateUser = (id, updatedUser) => {
-    const userDoc = doc(db, "users", id);
+    const userDoc = doc(db, "users", id);    
     return updateDoc(userDoc, updatedUser);
   };
 
