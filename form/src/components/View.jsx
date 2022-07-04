@@ -30,7 +30,7 @@ const View = (props) => {
             <Card>
             <CardBody>
               {/* <pre>{JSON.stringify(books, undefined, 2)}</pre>} */}
-              <Table>
+              <Table responsive="lg">
               <thead>
                 <tr>Assets</tr>
                 <tr>Model Number</tr>
@@ -40,22 +40,15 @@ const View = (props) => {
                 <tr>System</tr>
               </thead>
               <tbody>
-              <div className=" d-md-block ">
+              <div className=" ">
               {user.map((doc, index) => {
                 return (
-                  <tr>
-                  
-                  <th className="">{doc.type}</th>
+                  <tr key={doc.id}>
                   <td type="text">{doc.type}</td>
-                  <h4>Model Number</h4>
-                  <p type="text" >{doc.model}</p>
-                  <h4>Core</h4>
+                  <td type="text" >{doc.model}</td>
                   <p type="text" >{doc.core}</p>
-                  <h4>Year</h4>
                   <p type="text">{doc.year}</p>
-                  <h4>Driver</h4>
                   <p type="text">{doc.driver}</p>
-                  <h4>System</h4>
                   <p type="text" >{doc.system}</p>
                     <div>
                   
