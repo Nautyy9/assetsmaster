@@ -21,7 +21,7 @@ function Navbar() {
           <Logout/>
         </div>
         <nav className={sidebar ? 'nav-menu active bg-danger d-none d-lg-block' : 'nav-menu bg-danger d-block'}>
-          <ul className='nav-menu-items bg-danger'  onClick={showSidebar}>
+          <ul className='nav-menu-items bg-danger order-lg-first'  onClick={showSidebar}>
             <li className='navbar-toggle bg-danger '>
               <Link to='#' className='menu-bars '>
                 <AiIcons.AiOutlineClose />

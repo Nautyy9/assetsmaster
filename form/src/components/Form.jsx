@@ -1,21 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import {Card, CardBody, Container, Alert} from 'reactstrap'
+import {Card, CardBody, Container,Input,Alert} from 'reactstrap'
 import Sidebar from '../minor/Sidebar'
 import LaptopFormInput from '../specs/LaptopFormInput';
-import PhoneFormInput from '../specs/PhoneFormInput';
-import TvFormInput from '../specs/TvFormInput';
+
 import UserDataService from '../service/userData';
-import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 // import { useState } from 'react'
 // import Button from 'react-bootstrap/Button';
 function FormComp(props) {
   const [message, setMessage] = useState({error: false, msg: ""})
-  const [lapDesk, setlapDesk] = useState(false)
-  const [phone, setPhone] = useState(false)
-  const [tv, setTv] = useState(false);
-  const [type, setType] = useState("")
+  const [type, setType] = useState("assets")
   
 
   const editHandler = async (id) => {
@@ -38,8 +33,9 @@ function FormComp(props) {
       props.setPc(docSnap.data().pc);
       props.setBusVer(docSnap.data().busVer);
       props.setPurYear(docSnap.data().purYear);
+      
     } catch (err) {
-      setMessage({ error: true, msg: err.message });
+      setMessage({ error: true, msg: "please fill in data" });
     }
   };
   useEffect(() => {
@@ -50,11 +46,11 @@ function FormComp(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    if (props.system === "" || props.model === "" || props.drive === "" || props.year === "" || props.core === "" || props.make === "" || props.serial === "" || props.host === "" || props.gen === "" || props.ram === "" || props.pc === "" || props.busVer === "" || props.purYear === "") {
-      toast.error("Please fill in form data")
+    if (props.system === "" || props.model === "" || props.drive === "" || props.year === "" || props.core === "" || props.make === "" || props.serial === "" || props.host === "" || props.gen === "" || props.ram === "" || props.pc === "" || props.busVer === "" || props.purYear === "" ) {
+      setMessage({ error: true, msg: "Please fill in all the fields" });
       return;
     }
-    const user ={ core: props.core, model: props.model, system: props.system, year: props.year, drive: props.drive, type: type }
+    const user ={ core: props.core, model: props.model, system: props.system, year: props.year, drive: props.drive, type: type , make: props.make, serial: props.serial, host: props.serial, gen: props.gen, ram: props.ram, pc: props.pc, busVer: props.busVer, purYear: props.purYear }
     console.log(user);
 
     try {
@@ -62,9 +58,10 @@ function FormComp(props) {
         await UserDataService.updateUser(props.id, user);
         props.setUserId("");
         setMessage({ error: false, msg: "Updated successfully!" });
+
       } else {
         await UserDataService.createUser(user);
-        setMessage({ error: false, msg: "New Book added successfully!" });
+        setMessage({ error: false, msg: "New User data added successfully!" });
       }
     } catch (err) {
       setMessage({ error: true, msg: err.message });
@@ -80,43 +77,12 @@ function FormComp(props) {
     props.setRam("");
     props.setPc("");
     props.setBusVer("");
-    props.setPurYear("");
+    props.setPurYear([]);
     props.setMake("");
-    props.setYear("");
+    props.setYear([]);
   };
 
 
-  function impMethod(e){
-    e.preventDefault()
-
-    if(e.target.value === "2")
-      {
-        setPhone(false)
-        setTv(false)
-        setlapDesk(true);
-      }
-    else if( e.target.value === "3")
-      {
-        setPhone(false)
-        setTv(false)
-        setlapDesk(true)
-      }
-    else if(e.target.value === '4')
-    {
-      setlapDesk(false)
-      setTv(false)
-      setPhone(true)
-    }
-    else if(e.target.value === '5')
-    {
-      setPhone(false)
-      setlapDesk(false)
-      setTv(true)
-  }
-    else
-      return 
-    
-  }
 
   const inputType = (e) =>{
     e.preventDefault()
@@ -124,35 +90,42 @@ function FormComp(props) {
   }
   return (
     <div className=' row ' >
-    <div className="flex flex-sm-column row-2 ">
+    
+    <div className="flex flex-sm-column row-2  mb-4">
     <Sidebar/>
+     
     </div>
-      
+    <div className='text-center' style={{position: "sticky"}}>
+    {message?.msg && (
+          <Alert
+            color={message?.error ? "danger" : "success "}
+            dismissible
+            onClose={() => setMessage("")}
+          >
+            {message?.msg}
+          </Alert>
+        )}
+        </div>
       <Container className='flex col d-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}>
-        <div className='w-100' style={{maxWidth: "400px"}}>
-          <h1 className='text-center' style={{overflow: 'hidden'}}>Assets </h1>
-            <Card className=" col ">
+        <div className='w-50 ' style={{maxWidth: "100%"}}>
+          <h1 className='text-center' style={{overflow: 'hidden'}}>Assets Master</h1>
+          
+           <Card className=" col mb-4 ">
+          
               <CardBody>
                 <div className=' mb-2 p-6' >
                   <div>
-                    <p htmlFor="exampleSelect" className='text-center'>Requirements</p>
-                      <select className='form-control' type="select" id="exampleSelect" 
-                        name={type}
-                        onChange={impMethod || inputType}>
-                        <option value="1" >Assets Type</option>
-                        <option value="2" default>Laptop</option>
-                        <option value="3">Computer</option>
-                        <option value="4">Phone</option>
-                        <option value="5">TV</option>
-                      </select>
+                      <Input  className='form-control' type="select" id="exampleSelect" 
+                        value={type}
+                        onChange={inputType}>
+                        <option value="assets" >Assets Type</option>
+                        <option value="Laptop" default>Laptop</option>
+                        <option value="Computer">Computer</option>
+                       
+                      </Input>
                   </div>
                 </div>
-                {
-                tv ? 
-                <TvFormInput props = {props}  handleSubmit={handleSubmit}/>
-                 : phone ? <PhoneFormInput props={props} handleSubmit={handleSubmit} />: <LaptopFormInput props={props} handleSubmit={handleSubmit}/>
-                }
-                
+                 <LaptopFormInput props={props} handleSubmit={handleSubmit}/>
               </CardBody>
           </Card>
         </div>

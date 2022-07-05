@@ -1,9 +1,16 @@
 import React from 'react'
-import {Form,Button} from 'reactstrap'
+import { useNavigate } from 'react-router-dom';
+import {Form,Button, Input} from 'reactstrap'
 
 function LaptopFormInput(props) {
 
+  const nav = useNavigate()
+
   const {handleSubmit} = props;
+  const handleBtnsubmit = (e)=>{
+    e.preventDefault();
+    nav('/view')
+  }
 
 function handleModel (e)
     {
@@ -62,6 +69,7 @@ function handleSystem (e)
   {
     e.preventDefault();
     props.props.setPc(e.target.value)
+    console.log(e.target.value)
   }
   function handleBusVer (e)
   {
@@ -81,7 +89,7 @@ function handleSystem (e)
         id='inputEmail' 
         className='form-control' 
         placeholder='model'
-        value={props.props.model} 
+        value={props.props.make} 
         onChange={handleMake}></input>
       <label htmlFor='' className='form-label'>
         Make
@@ -96,7 +104,7 @@ function handleSystem (e)
         value={props.props.model} 
         onChange={handleModel}></input>
       <label htmlFor='inputEmail' className='form-label'>
-        Model
+        Model Number
         </label> 
     </div>
     <div className="form-floating mb-4">
@@ -105,7 +113,7 @@ function handleSystem (e)
         id='inputEmail' 
         className='form-control' 
         placeholder='model'
-        value={props.props.model} 
+        value={props.props.serial} 
         onChange={handleSerial}></input>
       <label htmlFor='inputEmail' className='form-label'>
         Serial Number
@@ -116,7 +124,7 @@ function handleSystem (e)
         type="text"
         id='inputAddress' 
         className='form-control' placeholder='core'
-        value={props.props.core} 
+        value={props.props.host} 
         onChange={handleHost }></input>
       <label htmlFor='inputAddress' >Host Name</label>
     </div>
@@ -125,18 +133,24 @@ function handleSystem (e)
         type="text"
         id='inputAddress' 
         className='form-control' placeholder='core'
-        value={props.props.core} 
+        value={props.props.gen} 
         onChange={handleGen}></input>
       <label htmlFor='inputAddress' >Generation</label>
     </div>
     <div className="form-floating mb-4">
-      <input 
-        type="text"
+      <Input 
+        type="select"
         id='inputAddress' 
         className='form-control' placeholder='core'
         value={props.props.core} 
-        onChange={handleCore}></input>
-      <label htmlFor='inputAddress' >Cpu</label>
+        onChange={handleCore}>
+          <option type="Core" >Core</option>
+          <option type="i3">i3</option>
+          <option type="i5">i5</option>
+          <option type="i7">i7</option>
+          <option type="i9">i9</option>
+        </Input>
+      
     </div>
     
     <div className="form-floating mb-4">
@@ -144,7 +158,7 @@ function handleSystem (e)
         type="text"
         id='inputAddress' 
         className='form-control' placeholder='core'
-        value={props.props.core} 
+        value={props.props.ram} 
         onChange={handleRam}></input>
       <label htmlFor='inputAddress' >RAM</label>
     </div>
@@ -160,47 +174,64 @@ function handleSystem (e)
       <label htmlFor='inputName' >HDD</label>
     </div>
     <div className="form-floating mb-4 ">
-      <input 
-        type="text" 
+      <Input 
+        type="select" 
         id='inputName' 
         className='form-control' 
-        placeholder='System'
         value={props.props.system} 
-        onChange={handleSystem}></input>
-      <label htmlFor='inputName'>OS Type</label>
+        onChange={handleSystem}>
+        <option type="Operating System" >Operating System</option>
+          <option type="Windows">Windows</option>
+          <option type="Linux">Linux</option>
+          <option type="Mac">Mac</option>
+        </Input>
+      
     </div>
     <div className="form-floating mb-4">
-      <input 
-        type="text"
+      <Input 
+        type="select"
         id='inputAddress' 
-        className='form-control' placeholder='core'
-        value={props.props.core} 
-        onChange={handlePc}></input>
-      <label htmlFor='inputAddress' >Purchase Company</label>
+        className='form-control'
+        value={props.props.pc} 
+        onChange={handlePc}>
+          <option type="Business Vertical" >Business Vertical</option>
+          <option type="DJTCorp">DJTCorp</option>
+          <option type="DJTCorp">DJTCorp</option>
+          <option type="DJTCorp">DJTCorp</option>
+          <option type="DJTCorp">DJTCorp</option>
+        </Input>
+     
       </div>
       <div className="form-floating mb-4 ">
-      <input 
-        type="text" 
+      <Input 
+        type="select" 
         id='inputName' 
         className='form-control' 
-        placeholder='Year'
-        value={props.props.year} 
-        onChange={handleBusVer}></input>
-      <label htmlFor='inputName'>Business Vertical</label>
+        value={props.props.busVer} 
+        onChange={handleBusVer}>
+        <option type="Business Vertical" >Business Vertical</option>
+          <option type="DJTCorp">DJTCorp</option>
+          <option type="DJTCorp">DJTCorp</option>
+          <option type="DJTCorp">DJTCorp</option>
+          <option type="DJTCorp">DJTCorp</option>
+        </Input>
+      
     </div>
       <div className="form-floating mb-4 ">
       <input 
-        type="text" 
+        type="date" 
         id='inputName' 
         className='form-control' 
         placeholder='Year'
-        value={props.props.year} 
-        onChange={handlePurYear}></input>
+        value={props.props.purYear} 
+        onChange={handlePurYear}>
+
+        </input>
       <label htmlFor='inputName'>Purchase Date</label>
     </div>
     <div className="form-floating mb-4 ">
       <input 
-        type="text" 
+        type="date" 
         id='inputName' 
         className='form-control' 
         placeholder='Year'
@@ -209,8 +240,8 @@ function handleSystem (e)
       <label htmlFor='inputName'>Expire Date</label>
     </div>
     
-    <Button type='submit' className=' p-2  bg-primary' >
-             Submit    
+    <Button type='submit' className=' position-absolute  p-2 bg-primary ' onSubmit={handleBtnsubmit}>
+                Submit
     </Button>
     </Form>
   )

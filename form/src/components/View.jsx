@@ -25,62 +25,75 @@ const View = (props) => {
   return (
     <>
     <Sidebar/>
-    <Container className='mt-4 flex col d-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}>
-        <div className='w-100' style={{maxWidth: "500px"}}>
-            <Card>
+    <Container className='mt-4 flex col d-flex align-items-center justify-content-center' style={{Height:"100vh"}}>
+        <div className='w-100' style={{width: "100%"}}>
+            <Card style={{height: "100vh"}} className="mb-4">
             <CardBody>
               {/* <pre>{JSON.stringify(books, undefined, 2)}</pre>} */}
-              <Table>
-              <thead>
-                <tr>Assets</tr>
-                <tr>Model Number</tr>
-                <tr>Core</tr>
-                <tr>Year</tr>
-                <tr>Driver</tr>
-                <tr>System</tr>
+              <Table responsive striped bordered hover >
+              <thead >
+              <th >Assets</th>
+                <th >Make</th>
+                <th>Model Number</th>
+                <th>Serial Number</th>
+                <th>Host Name</th>
+                <th>Generation</th>
+                <th>CPU</th>
+                <th>RAM</th>
+                <th>HDD</th>
+                <th>OS Type</th>
+                <th>Purchase Company</th>
+                <th>Business Vertical</th>
+                <th>Purchase Date</th>
+                <th>Expire Date</th>
               </thead>
-              <tbody>
-              <div className=" d-md-block ">
+              <tbody className="striped">
+            
               {user.map((doc, index) => {
                 return (
-                  <tr>
-                  
-                  <th className="">{doc.type}</th>
+                  <>
+                  <tr key={doc.id}>
                   <td type="text">{doc.type}</td>
-                  <h4>Model Number</h4>
-                  <p type="text" >{doc.model}</p>
-                  <h4>Core</h4>
-                  <p type="text" >{doc.core}</p>
-                  <h4>Year</h4>
-                  <p type="text">{doc.year}</p>
-                  <h4>Driver</h4>
-                  <p type="text">{doc.driver}</p>
-                  <h4>System</h4>
-                  <p type="text" >{doc.system}</p>
-                    <div>
-                  
+                  <td type="text">{doc.make}</td>
+                  <td type="text" >{doc.model}</td>
+                  <td type="text">{doc.serial}</td>
+                  <td type="text">{doc.host}</td>
+                  <td type="text" >{doc.gen}</td>
+                  <td type="text" >{doc.core}</td>
+                  <td type="text" >{doc.ram}</td>
+                  <td type="text" >{doc.drive}</td>
+                  <td type="text" >{doc.system}</td>
+                  <td type="text" >{doc.pc}</td>
+                  <td type="text" >{doc.busVer}</td>
+                  <td type="text" >{doc.purYear}</td>
+                  <td type="tex" >{doc.year}</td>
+                  <div className="d-flex gap-2 ">
                         <Button
-                          
-                            color="warning p-4 m-2"
-                            className="edit "
+                            color="warning "
+                            className=" d-flex"
+                            size="lg"
                             onClick={(e) => userId(doc.id)}
                           >
-                            <Link to='/add' className="edit " style={{color: 'white', textDecoration: "none"}}>Edit</Link>
+                            <Link to='/add' className=" " style={{color: 'white', textDecoration: "none"}}>Edit</Link>
                           </Button>
                           <Button
                             color="danger"
-                            className="delete"
+                            className=""
                             onClick={(e) => deleteHandler(doc.id)}
                           >
                             Delete
                         </Button>
-                        
-                        </div>
+                  </div>
                   </tr>
+                  
+                        </>
+                        
+                        
+                  
                 )
                 
               }) }
-                </div>
+                
                 </tbody>
               </Table>
               </CardBody>
@@ -93,3 +106,4 @@ const View = (props) => {
 };
 
 export default View;
+
