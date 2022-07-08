@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react'
 import {Card, CardBody, Container,Input,Alert} from 'reactstrap'
 import Sidebar from '../minor/Sidebar'
 import LaptopFormInput from '../specs/LaptopFormInput';
-
+import "react-toastify/dist/ReactToastify.css"
 import UserDataService from '../service/userData';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 // import { useState } from 'react'
 // import Button from 'react-bootstrap/Button';
@@ -16,7 +16,6 @@ function FormComp(props) {
   const editHandler = async (id) => {
     setMessage("");
     try {
-      console.log("hi")
       const docSnap = await UserDataService.getUser(props.id);
       console.log("the record is :", docSnap.data());
       setType(docSnap.data().type)
@@ -35,7 +34,7 @@ function FormComp(props) {
       props.setPurYear(docSnap.data().purYear);
       
     } catch (err) {
-      setMessage({ error: true, msg: "please fill in data" });
+      console.log(err)
     }
   };
   useEffect(() => {
@@ -47,7 +46,7 @@ function FormComp(props) {
     e.preventDefault();
     setMessage("");
     if (props.system === "" || props.model === "" || props.drive === "" || props.year === "" || props.core === "" || props.make === "" || props.serial === "" || props.host === "" || props.gen === "" || props.ram === "" || props.pc === "" || props.busVer === "" || props.purYear === "" ) {
-      setMessage({ error: true, msg: "Please fill in all the fields" });
+      toast.error("Please fill in complete details")
       return;
     }
     const user ={ core: props.core, model: props.model, system: props.system, year: props.year, drive: props.drive, type: type , make: props.make, serial: props.serial, host: props.serial, gen: props.gen, ram: props.ram, pc: props.pc, busVer: props.busVer, purYear: props.purYear }
@@ -57,11 +56,11 @@ function FormComp(props) {
       if (props.id !== undefined && props.id !== "") {
         await UserDataService.updateUser(props.id, user);
         props.setUserId("");
-        setMessage({ error: false, msg: "Updated successfully!" });
+        toast.success("Data updated successfully")
 
       } else {
         await UserDataService.createUser(user);
-        setMessage({ error: false, msg: "New User data added successfully!" });
+        toast.success("New User data added successfully!")
       }
     } catch (err) {
       setMessage({ error: true, msg: err.message });
@@ -90,22 +89,13 @@ function FormComp(props) {
   }
   return (
     <div className=' row ' >
+    <ToastContainer autoClose={5000}/> 
     
     <div className="flex flex-sm-column row-2  mb-4">
     <Sidebar/>
      
     </div>
-    <div className='text-center' style={{position: "sticky"}}>
-    {message?.msg && (
-          <Alert
-            color={message?.error ? "danger" : "success "}
-            dismissible
-            onClose={() => setMessage("")}
-          >
-            {message?.msg}
-          </Alert>
-        )}
-        </div>
+  
       <Container className='flex col d-flex align-items-center justify-content-center' style={{minHeight:"100vh"}}>
         <div className='w-50 ' style={{maxWidth: "100%"}}>
           <h1 className='text-center' style={{overflow: 'hidden'}}>Assets Master</h1>
@@ -126,7 +116,9 @@ function FormComp(props) {
                   </div>
                 </div>
                  <LaptopFormInput props={props} handleSubmit={handleSubmit}/>
+                
               </CardBody>
+              
           </Card>
         </div>
       </Container>

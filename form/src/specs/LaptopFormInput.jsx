@@ -9,7 +9,7 @@ function LaptopFormInput(props) {
   const {handleSubmit} = props;
   const handleBtnsubmit = (e)=>{
     e.preventDefault();
-    nav('/view')
+    nav('view')
   }
 
 function handleModel (e)
@@ -69,7 +69,6 @@ function handleSystem (e)
   {
     e.preventDefault();
     props.props.setPc(e.target.value)
-    console.log(e.target.value)
   }
   function handleBusVer (e)
   {
@@ -240,7 +239,7 @@ function handleSystem (e)
       <label htmlFor='inputName'>Expire Date</label>
     </div>
     
-    <Button type='submit' className=' position-absolute  p-2 bg-primary ' onSubmit={handleBtnsubmit}>
+    <Button type='submit' className=' position-absolute  p-2 bg-primary '>
                 Submit
     </Button>
     </Form>
