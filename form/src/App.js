@@ -4,7 +4,6 @@ import {Routes, Route, BrowserRouter as Router} from 'react-router-dom'
 import View from "./components/View";
 import LoginPage from "./components/LoginPage";
 import Signup from "./components/Signup";
-import {AuthContextProvider} from '../src/context/AuthContext'
 
 function App() {
   const [model, setModel] = useState("");
@@ -21,6 +20,8 @@ function App() {
   const [pc, setPc] = useState("");
   const [busVer, setBusVer] = useState("");
   const [purYear, setPurYear] = useState([]);
+  const [eid, setEid] = useState([]);
+  const [ssnId, setSsnId] = useState("");
 
   const getUserIdHandler = (id) => {
     console.log("The ID of document to be edited: ", id);
@@ -55,10 +56,10 @@ function App() {
     setPurYear
   }
   return (
-    <AuthContextProvider>
+  
       <Router>
         <Routes>
-          <Route path="/" element={<LoginPage/>}/>
+          <Route path="/" element={<LoginPage ssnId={ssnId} setSsnId={setSsnId} />}/>
           
             <Route  path='add' element={<Form  
             model ={model} 
@@ -86,15 +87,18 @@ function App() {
             pc ={pc} 
             busVer={busVer} 
             purYear={purYear} 
-            setPc={setPc} s
+            setPc={setPc} 
             setBusVer={setBusVer} 
-            setPurYear={setPurYear} />}/>
-            <Route  path='view' element={<View props={props} userId={getUserIdHandler}/>}/>
+            setPurYear={setPurYear}
+            eid={eid}
+            setEid={setEid}
+            ssnId={ssnId} setSsnId={setSsnId} />}/>
+            <Route  path='view' element={<View props={props} userId={getUserIdHandler} ssnId={ssnId} setSsnId={setSsnId}/>}/>
          
-          <Route exact path='sign-up' element={<Signup/>}/>
+          <Route exact path='sign-up' element={<Signup eid={eid} setEid={setEid}/> }/>
         </Routes>
       </Router>
-    </AuthContextProvider>
+   
     
   );
 }

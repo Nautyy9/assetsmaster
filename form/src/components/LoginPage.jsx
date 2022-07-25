@@ -1,30 +1,63 @@
-import React,{ useState}from 'react'
+import React,{ useState, useEffect}from 'react'
 import { Form , FormGroup, Label, Input, Button, Card, CardBody, Container, Alert, Toast,} from 'reactstrap'
 import {Link, useNavigate} from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-
- function LoginPage() {
-
+import axios from 'axios'
+ function LoginPage(props) {
+  
+ const {ssnId, setSsnId} = props
   
   const [err, setErr] = useState('');
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
-  const { logIn } = useAuth();
   const nav = useNavigate();
 
-   const handleSubmit =async (e) =>{
+   const handleSubmit = async (e) =>{
     e.preventDefault();
+    console.log(ssnId);
     setErr("")
-    try{
-      await logIn(email, password);
-      setLoading(false)
-       
-      nav('/add');
-    }catch{
-      setErr('User does not exists');
-    }
-    setLoading(true)
+   
+    // try{
+    //   // fetch('http://192.168.1.93/login', {
+    //   //   method: 'POST',
+    //   //   body: JSON.stringify({
+    //   //     "email": email,
+    //   //     "password": password
+    //   //   }),
+    //   //   headers: {
+    //   //     'Content-type': 'application/json; charset=UTF-8'
+    //   //   }
+    //   // })
+    //    await axios.post('http://192.168.1.93/login', body )
+    //   .then(
+    //     res => {
+          
+    //       console.log("data",res)
+        
+    //     console.log("-----", );
+    //     nav('/add')
+    //   })
+      
+    // }catch(error){
+    //   console.log(error);
+    // }
+    fetch('http://192.168.1.93/login', {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        email: email,
+        password: password
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    })
+    .then((res) => res.json())
+    .then((data) => setSsnId(data.Key))
+    .then(nav('/view'))
+   
+    .catch((e) => console.log(e))
+
   }
 
   const handleEmail =(e) =>{

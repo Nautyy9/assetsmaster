@@ -2,11 +2,14 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import {Form,Button, Input} from 'reactstrap'
 
+
 function LaptopFormInput(props) {
 
+ 
   const nav = useNavigate()
 
   const {handleSubmit} = props;
+  
   const handleBtnsubmit = (e)=>{
     e.preventDefault();
     nav('view')
@@ -113,10 +116,13 @@ function handleSystem (e)
         className='form-control' 
         placeholder='model'
         value={props.props.serial} 
-        onChange={handleSerial}></input>
-      <label htmlFor='inputEmail' className='form-label'>
+        onChange={handleSerial}
+         required></input>
+        <label htmlFor='inputEmail' className='form-label'>
         Serial Number
         </label> 
+      
+       
     </div>
     <div className="form-floating mb-4">
       <input 
@@ -239,7 +245,7 @@ function handleSystem (e)
       <label htmlFor='inputName'>Expire Date</label>
     </div>
     
-    <Button type='submit' className=' position-absolute  p-2 bg-primary '>
+    <Button type='submit' className=' position-absolute bg-primary '>
                 Submit
     </Button>
     </Form>

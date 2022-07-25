@@ -14,15 +14,15 @@ function Navbar() {
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
-        <div className=' justify-content-start align-items-center d-none d-lg-flex bg-danger' style={{background: 'gray', height: '60px',overflow: 'hidden' }} >
+        <div className=' justify-content-start align-items-center d-none d-lg-flex bg-dark' style={{background: 'gray', height: '60px',overflow: 'hidden' }} >
           <Link to='#' className='menu-bars m-5 ' style={{overflow: 'hidden'}} >
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
           <Logout/>
         </div>
-        <nav className={sidebar ? 'nav-menu active bg-danger d-none d-lg-block' : 'nav-menu bg-danger d-block'}>
-          <ul className='nav-menu-items bg-danger order-lg-first'  onClick={showSidebar}>
-            <li className='navbar-toggle bg-danger '>
+        <nav className={sidebar ? 'nav-menu active bg-dark d-none d-lg-block' : 'nav-menu bg-dark d-block'}>
+          <ul className='nav-menu-items bg-dark order-lg-first'  onClick={showSidebar}>
+            <li className='navbar-toggle bg-dark '>
               <Link to='#' className='menu-bars '>
                 <AiIcons.AiOutlineClose />
               </Link>
@@ -40,7 +40,7 @@ function Navbar() {
             })}
           </ul>
         </nav>
-         <div className={sidebar ? 'd-flex bg-danger d-lg-none' : 'd-flex bg-danger d-block d-lg-none'} style={{textDecoration: ' none '}}>
+         <div className={sidebar ? 'd-flex bg-dark text-white d-lg-none' : 'd-flex bg-dark text-white d-block d-lg-none'} style={{textDecoration: ' none '}}>
             {SidebarData.map((item, index) => {
               return (
                 <li key={index} className="cName">

@@ -68,6 +68,7 @@
   padding: 0 5px;
   border-radius: 4px;
 }
+
 .cName  {
   display: flex;
   justify-content: start;
@@ -86,6 +87,10 @@
   align-items: center;
   border-radius: 4px;
 }
+
+.cName:hover{
+  color: black;
+}
 .something
 { 
   justify-content: end;
@@ -98,6 +103,7 @@
 
 .nav-text a:hover {
   background-color: white;
+  color: black
 }
 
 .nav-menu-items {

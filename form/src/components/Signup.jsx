@@ -1,35 +1,54 @@
 import React, {useState} from 'react'
 import {Input , Label, FormGroup, Form, Card, CardBody, Container, Button, Alert } from 'reactstrap'
 import {Link, useNavigate} from 'react-router-dom'
-import { useAuth } from '../context/AuthContext';
-
-
-
-function Signup() {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
+import axios from 'axios'
+ 
+function Signup(props) {
+    const [email, setEmail] = useState([{}])
+    const [password, setPassword] = useState([{}])
+    const {eid, setEid} = props;
     const [err, setErr] = useState("");
     const [loading, setLoading] = useState(false)
-    const {signUp} = useAuth()
     const navigate = useNavigate();
+
+    const body = {
+      "Eid": eid,
+      "email": email,
+      "password" : password
+    }
 
   const handleSubmit = async (e) =>{
     e.preventDefault();
 
-    if(password !== confirmPassword)
-    {
-      return setErr("Password doesn't match");
-    }
     try{
       setErr("")
       setLoading(true);
-      await signUp(email, password, confirmPassword);
-
-      navigate('/add');
+      await axios.post("http://192.168.1.93/register", body)
+      .then((res) => {
+        console.log(res);
+        navigate('/add')
+    })
     }catch{
       setErr('Failed to authenticate');
     }
+  //   try 
+  //   { await fetch('http://192.168.1.93:80/register', {
+  //     method: 'POST',
+  //     body:{
+  //       "email": email,
+  //       "password":password,
+  //     },
+  //     headers: {
+  //       'Content-type': 'application/json; charset=UTF-8'
+  //     }
+  //   })
+  //   .then(navigate('/add'))
+  //   .then(console.log)
+  // }
+  //   catch(err) {
+  //     setErr(err);
+  //   }
+
     setLoading(false)
   }
 
@@ -41,9 +60,9 @@ function Signup() {
     e.preventDefault()
     setPassword(e.target.value)
   }
-  const handleConfirmPassword =(e) =>{
+  const handleConfirmId =(e) =>{
     e.preventDefault()
-    setConfirmPassword(e.target.value)
+    setEid(e.target.value)
   }
 
   return (
@@ -63,8 +82,8 @@ function Signup() {
           <Input type='password' name='password' placeholder='' id='passtype' onChange={handlePassword}  required/>
         </FormGroup>
         <FormGroup >
-          <Label for='cnfrpasstype'>Enter Password</Label>
-          <Input type='password' name='password' placeholder='' id='cnfrpasstype' onChange={handleConfirmPassword} required/>
+          <Label for='emp id'>Employe Id</Label>
+          <Input type='id' name='Employe id' placeholder='' id='empid' onChange={handleConfirmId} required/>
         </FormGroup>
         <Button type='submit' className=' bg-primary'>Sign Up</Button>
       </Form>

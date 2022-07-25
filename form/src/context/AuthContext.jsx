@@ -1,70 +1,71 @@
-import React,{createContext, useContext, useState, useEffect} from 'react'
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged,signOut, sendPasswordResetEmail, updateEmail, updatePassword} from "firebase/auth"
-import {auth} from '../firebase'
+// import React,{createContext, useContext, useState, useEffect} from 'react'
+// import {createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged,signOut, sendPasswordResetEmail, updateEmail, updatePassword} from "firebase/auth"
+// import {auth} from '../firebase'
 
 
-const AuthContext = createContext()
-const user = auth.currentUser;
+// const AuthContext = createContext()
+// const user = auth.currentUser;
+// console.log(user);
 
-export function useAuth() {
-    return useContext(AuthContext)
-}
+// export function useAuth() {
+//     return useContext(AuthContext)
+// }
 
 
-export function AuthContextProvider({children}) 
-{
-    const [currentUser, setUser] = useState();
+// export function AuthContextProvider({children}) 
+// {
+//     const [currentUser, setUser] = useState();
 
-    useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-        setUser(currentuser)
-      })
+//     useEffect(() => {
+//       const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
+//         setUser(currentuser)
+//       })
     
-      return () =>{
-        unsubscribe();
-      };
+//       return () =>{
+//         unsubscribe();
+//       };
 
-    }, [])
+//     }, [])
     
 
-    function signUp(email, password) {
-        return createUserWithEmailAndPassword(auth,email, password);
-    }
+//     function signUp(email, password) {
+//         return createUserWithEmailAndPassword(auth,email, password);
+//     }
 
-    function logIn(email, password) {
-        return signInWithEmailAndPassword(auth, email, password);
-    }
-    function logout() {
-        return signOut(auth)
-      }
+//     function logIn(email, password) {
+//         return signInWithEmailAndPassword(auth, email, password);
+//     }
+//     function logout() {
+//         return signOut(auth)
+//       }
     
-      function resetPassword(email) {
-        return sendPasswordResetEmail(auth, email)
-      }
+//       function resetPassword(email) {
+//         return sendPasswordResetEmail(auth, email)
+//       }
     
-      function emailUpdate(email) {
-        return updateEmail(user, email)
-      }
+//       function emailUpdate(email) {
+//         return updateEmail(user, email)
+//       }
     
-      function passwordUpdate(password) {
-        return updatePassword(user, password)
-      }
+//       function passwordUpdate(password) {
+//         return updatePassword(user, password)
+//       }
 
-    const value= {
-        currentUser,
-        signUp,
-        logIn,
-        logout,
-        emailUpdate,
-        passwordUpdate,
-        resetPassword,
+//     const value= {
+//         currentUser,
+//         signUp,
+//         logIn,
+//         logout,
+//         emailUpdate,
+//         passwordUpdate,
+//         resetPassword,
 
-    }
-return (  
-        <AuthContext.Provider value={value}>
-            { children}
-        </AuthContext.Provider>
-)
-}
+//     }
+// return (  
+//         <AuthContext.Provider value={value}>
+//             { children}
+//         </AuthContext.Provider>
+// )
+// }
 
-export default AuthContext
+// export default AuthContext
