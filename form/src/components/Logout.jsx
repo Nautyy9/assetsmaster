@@ -16,7 +16,6 @@ const nav = useNavigate()
     try {
     await axios.post('http://192.168.1.93/logout')
     .then((res) => {
-        Cookies.remove('sessionid', 'j0trvckxlgkmomr3sgmann8p412aenlz')
         console.log(res);
         nav("/")
     })

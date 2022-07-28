@@ -2,13 +2,41 @@ import React, { useEffect, useState } from "react";
 import {  Button , Card, CardBody, Container, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 import Sidebar from "../minor/Sidebar"
-import axios from "axios"
 
 const View = (props) => {
-  const {userId} = props
+  const {userId, email, password} = props
   const [user, setUser] = useState([]);
-  
+
+ // var s_id=props.ssnId.slice(0,props.ssnId.length-1);
+  // console.log(s_id);
+
+  const raw = JSON.stringify({
+    "email": email,
+    "password": password
+  });
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Cookie", `${document.cookie}`);
+ 
+  var myHeader = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+var requestOption = {
+  method: 'POST',
+  body: raw,
+  headers: myHeader,
+  redirect: 'follow'
+};
+
   useEffect(() => {
+    
+    console.log(props.ssnId.slice(0,props.ssnId.length-1) +"-----"+myHeaders.get('Cookie'))
     getUsers();
   }, []);
 
@@ -23,20 +51,29 @@ const View = (props) => {
 //   })
 // };
 
-const getUsers = async () => {
-    await fetch('http://192.168.1.93/viewall',{
-      method: 'GET', 
-      
-      headers: {
-        'Set-Cookie': "sessionid="+props.ssnId,
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    })
-    .then((res) => {res.json()
-    setUser(res.data.map((doc) => ({ ...doc.data(), Uid: doc.Uid })))})
-.then(console.log)
 
-.catch((e) => console.log(e))
+
+const getUsers = async () => {
+  //  await fetch("http://192.168.1.93/login", requestOption)
+  //   .then(response => console.log(response))
+  //   .catch(error => console.log('error', error));
+
+    // await fetch('http://192.168.1.93/viewall', {
+    //   credentials:"include",
+    //   headers: {
+    //     'Content-type': 'application/json; charset=UTF-8',
+    //     'Cookie': `sessionid=${(props.ssnId)}`
+    //   }
+    // })
+   await fetch("http://192.168.1.93/viewall", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+    
+    //   console.log(res);
+    // setUser(res.data.map((doc) => ({ ...doc.data(), Uid: doc.Uid })))
+// .then(console.log)
+// .catch((e) => console.log(e))
    
 
 }

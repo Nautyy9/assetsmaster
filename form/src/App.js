@@ -21,7 +21,9 @@ function App() {
   const [busVer, setBusVer] = useState("");
   const [purYear, setPurYear] = useState([]);
   const [eid, setEid] = useState([]);
-  const [ssnId, setSsnId] = useState("");
+  const [ssnId, setSsnId] = useState([{}]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const getUserIdHandler = (id) => {
     console.log("The ID of document to be edited: ", id);
@@ -59,7 +61,7 @@ function App() {
   
       <Router>
         <Routes>
-          <Route path="/" element={<LoginPage ssnId={ssnId} setSsnId={setSsnId} />}/>
+          <Route path="/" element={<LoginPage ssnId={ssnId} setSsnId={setSsnId} email={email} password={password} setEmail={setEmail} setPassword={setPassword}/>}/>
           
             <Route  path='add' element={<Form  
             model ={model} 
@@ -93,7 +95,7 @@ function App() {
             eid={eid}
             setEid={setEid}
             ssnId={ssnId} setSsnId={setSsnId} />}/>
-            <Route  path='view' element={<View props={props} userId={getUserIdHandler} ssnId={ssnId} setSsnId={setSsnId}/>}/>
+            <Route  path='view' element={<View props={props} userId={getUserIdHandler} ssnId={ssnId} setSsnId={setSsnId} email={email} password={password} setEmail={setEmail} setPassword={setPassword}/>}/>
          
           <Route exact path='sign-up' element={<Signup eid={eid} setEid={setEid}/> }/>
         </Routes>

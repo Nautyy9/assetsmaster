@@ -6,62 +6,44 @@ import "react-toastify/dist/ReactToastify.css"
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios'
 
+
 // import { useState } from 'react'
 // import Button from 'react-bootstrap/Button';
 function FormComp(props) {
   const [message, setMessage] = useState({error: false, msg: ""})
   const [type, setType] = useState("assets")
   
-  // const editHandler = async (id) => {
-  // const user ={ 
-  //   "Uid": props.id,
-  //   "Eid": props.eid,
-  //   "updateData": "update",
-  //   "cpu": props.core,
-  //   "model": props.model,
-  //   "os": props.system,
-  //   "expiry_date": props.year,
-  //   "hdd": props.drive,
-  //   "asset_type": type,
-  //   "make": props.make,
-  //   "serial": props.serial,
-  //   "hostname": props.host,
-  //   "generation": props.gen,
-  //   "ram": props.ram,
-  //   "purchase_company": props.pc,
-  //   "business_vertical": props.busVer,
-  //   "purchase_date": props.purYear
-  //                }
+  const editHandler = async (id) => {
 
-  //   setMessage("");
-  //   try {
-  //     const docSnap = await axios.post('http://192.168.1.93/updatedata', user)
-  //     console.log("the record is :", docSnap);
-  //     console.log("editHandler");
+    setMessage("");
+    try {
+      const docSnap = await axios.get('http://192.168.1.93/uid')
+      console.log("the record is :", docSnap);
+      console.log("editHandler");
     
-  //     setType(docSnap.asset_type)
-  //     props.setModel(docSnap.model);
-  //     props.setCore(docSnap.cpu);
-  //     props.setDrive(docSnap.hdd);
-  //     props.setYear(docSnap.expire_date);
-  //     props.setSystem(docSnap.os);
-  //     props.setHost(docSnap.hostname);
-  //     props.setSerial(docSnap.serial);
-  //     props.setMake(docSnap.make);
-  //     props.setGen(docSnap.gen);
-  //     props.setRam(docSnap.ram);
-  //     props.setPc(docSnap.purchase_company);
-  //     props.setBusVer(docSnap.business_vertical);
-  //     props.setPurYear(docSnap.purchase_date);
+      setType(docSnap.asset_type)
+      props.setModel(docSnap.model);
+      props.setCore(docSnap.cpu);
+      props.setDrive(docSnap.hdd);
+      props.setYear(docSnap.expire_date);
+      props.setSystem(docSnap.os);
+      props.setHost(docSnap.hostname);
+      props.setSerial(docSnap.serial);
+      props.setMake(docSnap.make);
+      props.setGen(docSnap.gen);
+      props.setRam(docSnap.ram);
+      props.setPc(docSnap.purchase_company);
+      props.setBusVer(docSnap.business_vertical);
+      props.setPurYear(docSnap.purchase_date);
       
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // };
-  // useEffect(() => {
-  //   console.log("The id here is : ", props.id);
-  //     editHandler();
-  // }, [props.id]);
+    } catch (err) {
+      console.log(err)
+    }
+  };
+  useEffect(() => {
+    console.log("The id here is : ", props.Uid);
+      editHandler();
+  }, [props.Uid]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,7 +87,7 @@ function FormComp(props) {
     props.setPurYear([]);
     props.setMake("");
     props.setYear([]);
-  };
+   };
 
 
 

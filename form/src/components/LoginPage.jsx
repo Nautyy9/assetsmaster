@@ -1,22 +1,49 @@
 import React,{ useState, useEffect}from 'react'
-import { Form , FormGroup, Label, Input, Button, Card, CardBody, Container, Alert, Toast,} from 'reactstrap'
+import { Form , FormGroup, Label, Input, Button, Card, CardBody, Container, Alert, Toast} from 'reactstrap'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
+import Cookies from 'js-cookie'
  function LoginPage(props) {
   
- const {ssnId, setSsnId} = props
+ const {ssnId, setSsnId, email, password, setEmail, setPassword} = props
   
+
+ const [temp, setTemp] = useState("");
+
   const [err, setErr] = useState('');
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
+ 
   const nav = useNavigate();
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  document.cookie = `Cookie=${ssnId}`
+  
+var raw = JSON.stringify({
+  "email": email,
+  "password": password
+});
+ 
+
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow',
+ 
+ };
+
 
    const handleSubmit = async (e) =>{
     e.preventDefault();
-    console.log(ssnId);
     setErr("")
-   
+     await fetch("http://192.168.1.93/login", requestOptions)
+    .then(response => response.text().then((data) => setSsnId( JSON.parse(data).Key )))
+    .then(nav('/add'))
+    .catch(error => console.log('error', error));
+    
+    
+     
     // try{
     //   // fetch('http://192.168.1.93/login', {
     //   //   method: 'POST',
@@ -41,22 +68,21 @@ import axios from 'axios'
     // }catch(error){
     //   console.log(error);
     // }
-    fetch('http://192.168.1.93/login', {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({
-        email: email,
-        password: password
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    })
-    .then((res) => res.json())
-    .then((data) => setSsnId(data.Key))
-    .then(nav('/view'))
-   
-    .catch((e) => console.log(e))
+    // fetch('http://192.168.1.93/login', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     "email": email,
+    //     "password": password
+    //   }),
+    //   headers: {
+    //     'Content-type': 'application/json; charset=UTF-8'
+    //   }
+    // })
+    // .then((res) => res.json())
+    // .then((data) => localStorage.setItem('sessionid', data.Key))
+    // .then(nav('/view'))
+  
+    // .catch((e) => console.log(e))
 
   }
 
